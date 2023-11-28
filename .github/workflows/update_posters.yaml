@@ -16,12 +16,12 @@ jobs:
         run: bash downloader.sh downloadlist.csv
 
       - name: Uniting CSV Files.
-	    run: bash csvjoiner.sh ./_site/ ./userlist.csv
+        run: bash csvjoiner.sh ./_site/ ./userlist.csv
 
       - name: Convert CSV Files to JSON File.
-	  	run: python3 jsonConverter.py -i ./userlist.csv -o ./_site/userlist.json
+        run: python3 jsonConverter.py -i ./userlist.csv -o ./_site/userlist.json
       - name: Delete CSV Files.
-	    run: rm ./_site/*.csv
+        run: rm ./_site/*.csv
 
       - name: Upload GitHub Pages
         uses: actions/upload-pages-artifact@v1

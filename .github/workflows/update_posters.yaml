@@ -1,0 +1,43 @@
+name: "Update Posters"
+on: [push, workflow_dispatch]
+
+jobs:
+  update-posters:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    outputs:
+      updated: ${{ steps.update.outputs.updated }}
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+
+      - name: Download Files.
+        run: bash downloader.sh downloadlist.csv
+
+      - name: Uniting CSV Files.
+	    run: bash csvjoiner.sh ./_site/ ./userlist.csv
+
+      - name: Convert CSV Files to JSON File.
+	  	run: python3 jsonConverter.py -i ./userlist.csv -o ./_site/userlist.json
+      - name: Delete CSV Files.
+	    run: rm ./_site/*.csv
+
+      - name: Upload GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: _site/
+
+  deploy:
+    needs: update-posters
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2

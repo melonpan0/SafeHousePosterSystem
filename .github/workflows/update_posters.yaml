@@ -19,7 +19,7 @@ jobs:
       #  run: bash csvjoiner.sh ./_site/ ./userlist.csv
 
       - name: Convert CSV Files to JSON File.
-        run: python3 jsonConverter.py -i ./userlist.csv -o ./_site/userlist.json
+        run: python3 jsonConverter.py -i ./_site/userlist.csv -o ./_site/userlist.json
       - name: Delete CSV Files.
         run: rm ./_site/*.csv
 

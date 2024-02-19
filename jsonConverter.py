@@ -30,6 +30,8 @@ photodict = {}
 for list in photolist[1:(1 + len(photolist))]:
 	if len(list) < 3:
 			continue
+	# True Falseを正しく変換
+	list = [True if column == "true" else False if column == "false" for column in list]
 	tmp = {list[0]:{photolist[0][1]:int(list[1]), photolist[0][2]:list[2], photolist[0][3]:list[3]}}
 	photodict.update(tmp)
 

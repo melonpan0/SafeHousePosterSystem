@@ -10,7 +10,9 @@ jobs:
       updated: ${{ steps.update.outputs.updated }}
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+		with:
+			path: main
 
       - name: Download Files.
         run: bash downloader.sh downloadlist.csv
@@ -24,7 +26,7 @@ jobs:
         run: rm ./_site/*.csv
 
       - name: Upload GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: _site/
 
@@ -40,4 +42,6 @@ jobs:
 
     steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+	    id: deployment
+        uses: actions/deploy-pages@v4
+
